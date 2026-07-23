@@ -1,0 +1,281 @@
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="eyebrow">StageOS</div>
+      <h1>CompanyOS</h1>
+      <div class="brand-copy">Company roster and onboarding</div>
+    </div>
+
+    <div class="side-tools">
+      <div class="search-wrap">
+        <input id="search" class="search" placeholder="Search names, roles, or departments">
+      </div>
+      <div id="filters" class="filters">
+        <button class="chip active" data-filter="All">All</button>
+        <button class="chip" data-filter="Active">Active</button>
+        <button class="chip" data-filter="Returning">Returning</button>
+        <button class="chip" data-filter="Inactive">Inactive</button>
+      </div>
+    </div>
+
+    <div id="roster" class="roster"></div>
+
+    <div class="sidebar-actions">
+      <button id="addMember" class="btn primary full">Add company member</button>
+      <button id="importContactSheet" class="btn full">Import Contact Sheet</button>
+      <div class="migration-note">Preview first. Nothing imports until you approve it.</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div id="emptyState" class="empty">
+      <div class="empty-card">
+        <div class="eyebrow">CompanyOS</div>
+        <h2 id="emptyTitle">Build the company roster</h2>
+        <p id="emptyCopy">Import the existing Contact Sheet or create a new company member. CompanyOS will become the single source of truth.</p>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <button id="emptyImport" class="btn">Import Contact Sheet</button>
+          <button id="emptyAdd" class="btn primary">Add company member</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="editor" class="editor hidden">
+
+      <header class="hero">
+        <button id="profilePhotoButton" class="profile-photo" type="button" title="Edit profile photo">
+          <img id="profilePhotoImage" class="hidden" alt="">
+          <div id="profilePhotoPlaceholder" class="profile-photo-placeholder">?</div>
+          <span class="profile-photo-edit">✎</span>
+        </button>
+
+        <div class="hero-main">
+          <div class="hero-kicker">Company Profile</div>
+          <h2 id="heroName">New company member</h2>
+
+          <div class="hero-profile-line">
+            <label class="hero-inline-field role" title="Click to edit Role / Title">
+              <input id="roleTitle" placeholder="Role / Title">
+            </label>
+            <label class="hero-inline-field department" title="Click to edit Department">
+              <select id="department"></select>
+            </label>
+          </div>
+
+          <div id="heroContact" class="hero-contact">Email · Phone</div>
+        </div>
+
+        <label class="status-control" title="Click to update Status">
+          <select id="status"></select>
+        </label>
+      </header>
+
+      <input id="memberId" type="hidden">
+      <input id="displayName" type="hidden">
+      <input id="headshot" type="hidden">
+      <input id="sameAsLegalName" type="checkbox" class="hidden">
+      <select id="mayUsePronounsPublicly" class="hidden">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+      <input id="publicPronouns" type="hidden">
+
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h3>Personal Identity</h3>
+            <div class="section-copy">Identity, contact information, sharing preferences, and birthday details.</div>
+          </div>
+        </div>
+
+        <div class="identity-grid">
+          <label>Legal Name
+            <input id="legalName">
+          </label>
+
+          <label>Professional / Union Name
+            <input id="professionalName" placeholder="Name used throughout StageOS">
+            <span class="section-copy">This is the public name used by the roster, resolver, WeeklyOS, PayrollOS, and reports.</span>
+          </label>
+
+          <label>
+            <span class="field-label-row">
+              <span>Pronouns</span>
+              <span class="inline-share"><input id="sharePronouns" type="checkbox">Share</span>
+            </span>
+            <input id="pronouns">
+          </label>
+        </div>
+
+        <div class="contact-grid">
+          <label>
+            <span class="field-label-row">
+              <span>Email</span>
+              <span class="inline-share"><input id="shareEmail" type="checkbox">Share</span>
+            </span>
+            <input id="email" type="email">
+          </label>
+
+          <label>
+            <span class="field-label-row">
+              <span>Phone</span>
+              <span class="inline-share"><input id="sharePhone" type="checkbox">Share</span>
+            </span>
+            <input id="phone">
+          </label>
+        </div>
+
+        <label class="address-row">Address
+          <textarea id="address"></textarea>
+        </label>
+
+        <div class="birthday-grid">
+          <label>
+            <span class="field-label-row">
+              <span>Birthday</span>
+              <span class="inline-share"><input id="shareBirthday" type="checkbox">Share</span>
+            </span>
+            <input id="birthday" type="date">
+          </label>
+
+          <label>Celebrate With The Company?
+            <select id="celebrateBirthday">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+
+          <label id="treatWrap">Favorite Birthday Treat
+            <input id="favoriteBirthdayTreat">
+          </label>
+        </div>
+
+        <input id="shareProfessionalName" type="checkbox" class="hidden">
+        <input id="shareAddress" type="checkbox" class="hidden">
+      </section>
+
+      <section class="card private private-wide">
+        <div class="card-head">
+          <div>
+            <h3>Emergency / Private Notes</h3>
+            <div class="section-copy">Private information. Never written to the public Contact Sheet.</div>
+          </div>
+        </div>
+
+        <div class="subsection-title">Emergency Contact</div>
+
+        <div class="emergency-row">
+          <label>Name
+            <input id="emergencyContactName">
+          </label>
+          <label>Phone
+            <input id="emergencyContactPhone">
+          </label>
+          <label>Relationship
+            <input id="emergencyContactRelationship">
+          </label>
+        </div>
+
+        <label class="mt">Allergies / Private Stage Management Notes
+          <textarea id="allergiesPrivateNotes"></textarea>
+        </label>
+      </section>
+
+      <div class="two-card-row">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h3>Contract / Company State</h3>
+              <div class="section-copy">Contract dates and current company relationship.</div>
+            </div>
+          </div>
+
+          <div class="contract-grid">
+            <label>Start Date
+              <input id="startDate" type="date">
+            </label>
+            <label>End Date
+              <input id="endDate" type="date">
+            </label>
+          </div>
+
+          <label class="returning-toggle">
+            <input id="returningContractToggle" type="checkbox">
+            Returning Company Member
+          </label>
+
+          <div id="returningContractFields" class="returning-contract hidden">
+            <div class="contract-grid">
+              <label>Returning Start Date
+                <input id="returnDate" type="date">
+              </label>
+              <label>Returning End Date
+                <input id="returnEndDate" type="date">
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h3>Email Labels</h3>
+              <div class="section-copy">One label per line or separated by commas.</div>
+            </div>
+          </div>
+          <textarea id="gmailLabels" class="label-chip-editor" placeholder="StageOS Company&#10;Cast&#10;Current Company"></textarea>
+          <div id="gmailLabelPreview" class="email-label-preview"></div>
+        </section>
+      </div>
+
+      <section id="connectionsCard" class="card connections-card">
+        <div class="connections-head">
+          <div>
+            <h3>Connected Systems</h3>
+            <div class="section-copy">Confirm this person is connected everywhere they should be.</div>
+          </div>
+          <div>
+            <span id="connectionsSummary" class="connections-summary">Checking connections…</span>
+            <button id="toggleConnections" class="btn hidden" type="button">View</button>
+          </div>
+        </div>
+        <div id="connectionsBody" class="connections-body">
+          <div class="connections-grid">
+            <div id="coreSync" class="sync-list"></div>
+            <div id="stageConnections" class="sync-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="performanceHistorySection" class="card performance-history-card hidden">
+        <div class="card-head">
+          <div>
+            <h3>Performance History</h3>
+            <div id="performanceHistoryDescription" class="section-copy">A quick view of this person's work with the production.</div>
+          </div>
+          <span id="performanceHistoryType" class="history-preview-note">Preview</span>
+        </div>
+
+        <div id="performanceHistoryGrid" class="performance-history-grid"></div>
+      </section>
+
+
+
+
+      <div id="message" class="message"></div>
+
+      <div class="bottom-bar">
+        <div class="bottom-left">
+          <button id="previewContact" class="btn">Preview Contact Sheet</button>
+          <button id="applyContact" class="btn">Apply Contact Sheet</button>
+          <button id="archiveMember" class="btn danger">Archive member</button>
+          <button id="reactivateMember" class="btn success hidden">Reactivate member</button>
+        </div>
+        <div class="bottom-right">
+          <button id="closeDialog" class="btn">Close</button>
+          <button id="saveMember" class="btn primary">Save company record</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
