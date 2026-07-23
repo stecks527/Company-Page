@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <?!= companyOSInclude_("50 COMPANYOS - 02 STYLES"); ?>
+</head>
+<body>
+  <?!= companyOSInclude_("50 COMPANYOS - 03 BODY"); ?>
+  <?!= companyOSInclude_("50 COMPANYOS - 04 SCRIPT"); ?>
+</body>
+</html>
